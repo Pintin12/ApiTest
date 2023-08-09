@@ -27,7 +27,7 @@ namespace ApiTest.Controllers
             return Ok(_itemsService.GetItems());
         }
 
-        [HttpPost]
+        [HttpPost("CreateItem")]
         public async Task<ActionResult<ServiceResponse<List<GetItemsDto>>>> AddItem(AddItemsDto newItem)
         {
             return Ok(await _itemsService.AddItem(newItem));
@@ -38,6 +38,17 @@ namespace ApiTest.Controllers
         {
             var response = await _itemsService.DeleteItem(id);
             if (response.Data is null)
+            {
+                return NotFound(response);
+            }
+            return Ok(response);
+        }
+        
+        [HttpPut("UpdateItem")]
+        public async Task<ActionResult<ServiceResponse<GetItemsDto>>> UpdateItem(UpdateItemDto newItem)
+        {
+            var response = await _itemsService.UpdateItem(newItem);
+            if (response is null)
             {
                 return NotFound(response);
             }

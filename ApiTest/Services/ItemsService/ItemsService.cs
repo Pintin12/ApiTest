@@ -2,6 +2,7 @@
 using ApiTest.Dtos.Items;
 using ApiTest.Models;
 using AutoMapper;
+using Azure.Core;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApiTest.Services.ItemsService
@@ -95,5 +96,21 @@ namespace ApiTest.Services.ItemsService
 
         }
 
+        public async Task<ServiceResponse<List<GetItemsDto>>> UpdateItem(UpdateItemDto request)
+        {
+            var serviceResponse = new ServiceResponse<List<GetItemsDto>>();
+
+            var item = await _context.Items.FindAsync(request.Id);
+            if (item is null)
+                return null;
+
+            item.ItemState = request.itemState;
+            
+            await _context.SaveChangesAsync();
+
+            serviceResponse.Data = _mapper.Map<List<GetItemsDto>>(_context.Items.ToList());
+            return serviceResponse;
+            throw new NotImplementedException();
+        }
     }
 }

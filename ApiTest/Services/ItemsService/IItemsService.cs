@@ -9,5 +9,6 @@ namespace ApiTest.Services.ItemsService
         Task<ServiceResponse<List<GetItemsDto>>> GetItems();
         Task<ServiceResponse<List<GetItemsDto>>> AddItem(AddItemsDto newItem);
         Task<ServiceResponse<List<GetItemsDto>>> DeleteItem(int id);
+        Task<ServiceResponse<List<GetItemsDto>>> UpdateItem(UpdateItemDto newItem);
     }
 }
